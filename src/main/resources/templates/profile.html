@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Profil</title>
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"-->
+<!--          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">-->
+</head>
+<body>
+
+<div>
+    <p>USER NAME :<span th:text="${username}"></span></p>
+    <p>FIRST NAME :<span th:text="${firstName}"></span></p>
+    <p>LAST NAME :<span th:text="${lastName}"></span></p>
+    <p>DATE OF BIRTH :<span th:text="${dateOfBirth}"></span></p>
+    <p>BIO :<span th:text="${bio}"></span></p>
+    <img src="https://www.game-learn.com/wp-content/uploads/2021/08/welcome-sign.jpg" alt="profile img" />
+</div>
+
+<!--<div class="container">-->
+<!--<div class="row text-center">-->
+<!--</div>-->
+<!--<div class="row mt-5">-->
+<!--    <div th:each="user : ${user}" class="col">-->
+<!--        <div class="card" style="width: 18rem;">-->
+<!--            <div class="card-body">-->
+<!--                <p class="card-title" th:text="'User Name : ' + ${ApplicationUser.username}"></p>-->
+<!--                <p class="card-text">-->
+<!--                <p th:text="'First Name : '+ ${ApplicationUser.firstName}"></p>-->
+<!--                <p th:text="'Last Name ' + ${ApplicationUser.lastName}"></p>-->
+<!--                <p th:text="'Date Of Birth ' + ${ApplicationUser.dateOfBirth}"></p>-->
+<!--                <p th:text="'Bio ' + ${ApplicationUser.bio}"></p>-->
+<!--                </p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--</div>-->
+</body>
+</html>

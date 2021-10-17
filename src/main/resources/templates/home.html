@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+
+<header>
+    <a href="http://localhost:8080/signup">Sing Up</a>
+    <a href="http://localhost:8080/login">Log in</a>
+    <a th:href="@{http://localhost:8080/profile(id=${user})}">Profile</a>
+</header>
+<main>
+    <h1>WELCOME TO CODE FELLOWS SHIP</h1>
+</main>
+</body>
+</html>
