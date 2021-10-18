@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Profil</title>
-<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"-->
-<!--          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
 
@@ -18,6 +18,25 @@
     <img src="https://www.game-learn.com/wp-content/uploads/2021/08/welcome-sign.jpg" alt="profile img" />
 </div>
 
+<form  th:action="@{/addpost}" method="post" >
+    <div class="form-group">
+        <label for="body" id="body">Type Your Post</label>
+        <textarea rows="3" field="*{body}" name="body" required></textarea>
+    </div>
+    <button type="submit" >Submit</button>
+</form>
+
+<div>
+    <h3> Your Posts : </h3>
+    <ul th:each="post : ${postList}" style="width: 70%;">
+        <li >Post :<span th:text="${post.body}"></span><br/>
+        <li >Time :<span th:text="${post.createAt}"></span><br/>
+        <li >Posted By :<span th:text="${post.user.username}"></span><br/>
+
+        </li>
+        <br/>
+    </ul>
+</div>
 <!--<div class="container">-->
 <!--<div class="row text-center">-->
 <!--</div>-->

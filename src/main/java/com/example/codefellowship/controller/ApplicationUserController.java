@@ -1,7 +1,9 @@
 package com.example.codefellowship.controller;
 
 import com.example.codefellowship.models.ApplicationUser;
+import com.example.codefellowship.models.Post;
 import com.example.codefellowship.reposetory.ApplicationUserRepo;
+import com.example.codefellowship.reposetory.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -28,21 +31,28 @@ public class ApplicationUserController {
     @Autowired
     BCryptPasswordEncoder encoder;
 
+    @Autowired
+    PostRepository postRepository;
+
     @GetMapping("/signup")
-    public String signUpPage() {
+    public String signUpPage(@AuthenticationPrincipal ApplicationUser user, Model model) {
+        if (user != null)
+            model.addAttribute("username", applicationUserRepo.findByUsername(user.getUsername()).getUsername());
         return "signup";
     }
 
     @GetMapping("/login")
-    public String logInPage() {
+    public String logInPage(@AuthenticationPrincipal ApplicationUser user, Model model) {
+        if (user != null)
+            model.addAttribute("username", applicationUserRepo.findByUsername(user.getUsername()).getUsername());
         return "login";
     }
 
     @GetMapping("/")
-    public String homePage(@AuthenticationPrincipal ApplicationUser user , Model model){
+    public String homePage(@AuthenticationPrincipal ApplicationUser user, Model model) {
         if (user != null) {
             ApplicationUser findUser = applicationUserRepo.findByUsername(user.getUsername());
-            model.addAttribute("user", findUser.getId());
+            model.addAttribute("user", findUser.getUsername());
         }
         return "home";
     }
@@ -63,16 +73,31 @@ public class ApplicationUserController {
     }
 
 
-
     @GetMapping("/profile")
-    public String profile(@RequestParam Integer id , Model model){
-        Optional<ApplicationUser> user =  applicationUserRepo.findById(id);
-        model.addAttribute("username", user.get().getUsername());
-        model.addAttribute("firstName", user.get().getFirstName());
-        model.addAttribute("lastName", user.get().getLastName());
-        model.addAttribute("dateOfBirth", user.get().getDateOfBirth());
-        model.addAttribute("bio", user.get().getBio());
-        return "profile";
+    public String profile(@AuthenticationPrincipal ApplicationUser user, Model model) {
+        if (user != null) {
+            ApplicationUser newUser = applicationUserRepo.findByUsername(user.getUsername());
+            model.addAttribute("userId", newUser.getId());
+            model.addAttribute("username", newUser.getUsername());
+            model.addAttribute("firstName", newUser.getFirstName());
+            model.addAttribute("lastName", newUser.getLastName());
+            model.addAttribute("dateOfBirth", newUser.getDateOfBirth());
+            model.addAttribute("bio", newUser.getBio());
+
+            List<Post> postList =  postRepository.findAllByUser(newUser);
+            model.addAttribute("postList" , postList );
+        }
+        return "profile.html";
+
+    }
+
+
+    @PostMapping("/addpost")
+    public RedirectView addPost(@AuthenticationPrincipal ApplicationUser user, @RequestParam String body) {
+        ApplicationUser newUser = applicationUserRepo.findByUsername(user.getUsername());
+        Post addNewPost = new Post(body, newUser);
+        postRepository.save(addNewPost);
+        return new RedirectView("/profile");
     }
 
 }
