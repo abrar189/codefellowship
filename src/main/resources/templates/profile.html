@@ -1,60 +1,77 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Profil</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-</head>
+
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+
 <body>
 
-<div>
-    <p>USER NAME :<span th:text="${username}"></span></p>
-    <p>FIRST NAME :<span th:text="${firstName}"></span></p>
-    <p>LAST NAME :<span th:text="${lastName}"></span></p>
-    <p>DATE OF BIRTH :<span th:text="${dateOfBirth}"></span></p>
-    <p>BIO :<span th:text="${bio}"></span></p>
-    <img src="https://www.game-learn.com/wp-content/uploads/2021/08/welcome-sign.jpg" alt="profile img" />
-</div>
 
-<form  th:action="@{/addpost}" method="post" >
-    <div class="form-group">
-        <label for="body" id="body">Type Your Post</label>
-        <textarea rows="3" field="*{body}" name="body" required></textarea>
+<div>
+
+    <Card>
+        <ListGroup variant="flush">
+            <Card.Body>
+                <Card.Title>USER NAME</Card.Title>
+                <Card.Text class="list-group-item" th:text="${username}">
+                </Card.Text>
+            </Card.Body>
+
+            <Card.Body>
+                <Card.Title>FIRST NAME</Card.Title>
+                <Card.Text class="list-group-item" th:text="${firstName}">
+                </Card.Text>
+            </Card.Body>
+
+            <Card.Body>
+                <Card.Title>LAST NAME</Card.Title>
+                <Card.Text class="list-group-item" th:text="${lastName}">
+
+                </Card.Text>
+            </Card.Body>
+
+            <Card.Body>
+
+                <Card.Title>DATE OF BIRTH</Card.Title>
+                <Card.Text class="list-group-item" th:text="${dateOfBirth}">
+
+                </Card.Text>
+            </Card.Body>
+
+            <Card.Body>
+                <Card.Title>BIO</Card.Title>
+                <Card.Text class="list-group-item" th:text="${bio}">
+
+                </Card.Text>
+
+            </Card.Body>
+        </ListGroup>
+    </Card>
+
+    <div>
+
+
+        <form class="px-4 py-3" th:action="@{/addpost}" method="post" style="width: 70%;">
+            <div class="form-group">
+                <label for="body" id="body">Type Your Post</label>
+                <textarea class="form-control" rows="3" field="*{body}" name="body" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-warning">Submit</button>
+        </form>
+
+
+        <div>
+            <h3> Your Posts : </h3>
+            <ul th:each="post : ${postList}" class="list-group" style="width: 70%;">
+                <li class="list-group-item disabled">Post :<span th:text="${post.body}"></span><br/>
+                <li class="list-group-item disabled">Posted By :<span th:text="${post.user.username}"></span><br/>
+
+                </li>
+                <br/>
+            </ul>
+
+        </div>
     </div>
-    <button type="submit" >Submit</button>
-</form>
-
-<div>
-    <h3> Your Posts : </h3>
-    <ul th:each="post : ${postList}" style="width: 70%;">
-        <li >Post :<span th:text="${post.body}"></span><br/>
-        <li >Time :<span th:text="${post.createAt}"></span><br/>
-        <li >Posted By :<span th:text="${post.user.username}"></span><br/>
-
-        </li>
-        <br/>
-    </ul>
 </div>
-<!--<div class="container">-->
-<!--<div class="row text-center">-->
-<!--</div>-->
-<!--<div class="row mt-5">-->
-<!--    <div th:each="user : ${user}" class="col">-->
-<!--        <div class="card" style="width: 18rem;">-->
-<!--            <div class="card-body">-->
-<!--                <p class="card-title" th:text="'User Name : ' + ${ApplicationUser.username}"></p>-->
-<!--                <p class="card-text">-->
-<!--                <p th:text="'First Name : '+ ${ApplicationUser.firstName}"></p>-->
-<!--                <p th:text="'Last Name ' + ${ApplicationUser.lastName}"></p>-->
-<!--                <p th:text="'Date Of Birth ' + ${ApplicationUser.dateOfBirth}"></p>-->
-<!--                <p th:text="'Bio ' + ${ApplicationUser.bio}"></p>-->
-<!--                </p>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-<!--</div>-->
+</div>
 </body>
 </html>

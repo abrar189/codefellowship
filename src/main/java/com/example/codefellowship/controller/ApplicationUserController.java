@@ -44,7 +44,7 @@ public class ApplicationUserController {
     @GetMapping("/login")
     public String logInPage(@AuthenticationPrincipal ApplicationUser user, Model model) {
         if (user != null)
-            model.addAttribute("username", applicationUserRepo.findByUsername(user.getUsername()).getUsername());
+            model.addAttribute("user", applicationUserRepo.findByUsername(user.getUsername()).getUsername());
         return "login";
     }
 
@@ -73,23 +73,25 @@ public class ApplicationUserController {
     }
 
 
+
     @GetMapping("/profile")
     public String profile(@AuthenticationPrincipal ApplicationUser user, Model model) {
         if (user != null) {
-            ApplicationUser newUser = applicationUserRepo.findByUsername(user.getUsername());
-            model.addAttribute("userId", newUser.getId());
-            model.addAttribute("username", newUser.getUsername());
-            model.addAttribute("firstName", newUser.getFirstName());
-            model.addAttribute("lastName", newUser.getLastName());
-            model.addAttribute("dateOfBirth", newUser.getDateOfBirth());
-            model.addAttribute("bio", newUser.getBio());
+            Optional<ApplicationUser> currentUser = Optional.ofNullable(applicationUserRepo.findByUsername(user.getUsername()));
+            model.addAttribute("userId", currentUser.get().getId());
+            model.addAttribute("username", currentUser.get().getUsername());
+            model.addAttribute("firstName", currentUser.get().getFirstName());
+            model.addAttribute("lastName", currentUser.get().getLastName());
+            model.addAttribute("dateOfBirth", currentUser.get().getDateOfBirth());
+            model.addAttribute("bio", currentUser.get().getBio());
 
-            List<Post> postList =  postRepository.findAllByUser(newUser);
-            model.addAttribute("postList" , postList );
+            List<Post> postList = postRepository.findAllByUser(currentUser);
+            model.addAttribute("postList", postList);
         }
-        return "profile.html";
-
+        return "profile";
     }
+
+
 
 
     @PostMapping("/addpost")

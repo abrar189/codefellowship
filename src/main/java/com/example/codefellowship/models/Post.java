@@ -13,7 +13,7 @@ public class Post {
     private LocalDateTime createAt= LocalDateTime.now();
 
     @ManyToOne
-    private ApplicationUser user;
+    public ApplicationUser user;
 
     public Post() {
     }

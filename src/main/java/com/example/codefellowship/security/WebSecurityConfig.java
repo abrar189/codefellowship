@@ -24,25 +24,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .cors().disable().csrf().disable().authorizeRequests()
-                .antMatchers( "/login", "/signup","/")
-                .permitAll().anyRequest().authenticated().and().formLogin().loginPage("/login")
-                .loginProcessingUrl("/perform_login").defaultSuccessUrl("/profile", true)
-                .failureUrl("/error").and().logout().logoutUrl("/perform_logout").deleteCookies("JSESSIONID");
-//        http
-//                .authorizeRequests()
-//                .antMatchers("/", "/login", "/signup").permitAll()
-//                .anyRequest().authenticated()
-//                .and()
-//                .formLogin()
-//                .loginPage("/login")
-//                .defaultSuccessUrl("/profile")
-//                .and()
-//                .logout()
-//                .permitAll();
+        http.csrf().disable().authorizeRequests()
+                .antMatchers("/", "/signup").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login").defaultSuccessUrl("/", true)
+                .permitAll()
+                .and()
+                .logout()
+                .permitAll();
+
     }
 }
