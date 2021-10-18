@@ -8,7 +8,14 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
-<form action="/login" method="post">
+
+<!--<div th:if="${param.error}">-->
+<!--    Invalid username and password.-->
+<!--</div>-->
+<!--<div th:if="${param.logout}">-->
+<!--    You have been logged out.-->
+<!--</div>-->
+<form action="perform_login" method="post">
     <div class="mb-3">
         <label class="form-label">User Name</label>
         <input type="text" class="form-control" name="username" >
