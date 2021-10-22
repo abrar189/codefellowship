@@ -62,7 +62,9 @@
         <div>
             <h3> Your Posts : </h3>
             <ul th:each="post : ${postList}" class="list-group" style="width: 70%;">
+
                 <li class="list-group-item disabled">Post :<span th:text="${post.body}"></span><br/>
+                <li class="list-group-item disabled">Time :<span th:text="${post.createAt}"></span><br/>
                 <li class="list-group-item disabled">Posted By :<span th:text="${post.user.username}"></span><br/>
 
                 </li>

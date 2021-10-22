@@ -2,6 +2,10 @@ package com.example.codefellowship.models;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Post {
@@ -14,6 +18,7 @@ public class Post {
 
     @ManyToOne
     public ApplicationUser user;
+
 
     public Post() {
     }
@@ -54,6 +59,7 @@ public class Post {
     public void setApplicationUser(ApplicationUser applicationUser) {
         this.user = applicationUser;
     }
+
 
     @Override
     public String toString() {

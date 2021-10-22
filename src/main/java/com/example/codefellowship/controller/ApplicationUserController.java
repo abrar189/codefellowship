@@ -11,6 +11,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,10 +22,13 @@ import org.springframework.web.servlet.view.RedirectView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 public class ApplicationUserController {
-
+    @Transactional
+    public void authenticate(Authentication authentication){
+    }
     @Autowired
     ApplicationUserRepo applicationUserRepo;
 
@@ -50,9 +54,18 @@ public class ApplicationUserController {
 
     @GetMapping("/")
     public String homePage(@AuthenticationPrincipal ApplicationUser user, Model model) {
+        List<Post> postList = (List<Post>) postRepository.findAll();
+
         if (user != null) {
             ApplicationUser findUser = applicationUserRepo.findByUsername(user.getUsername());
             model.addAttribute("user", findUser.getUsername());
+            List<Post> FollowingPost = new ArrayList();
+            for (Post post : postList) {
+                if (!findUser.getFollowing().contains(post.getApplicationUser()) && post.getApplicationUser() != findUser)  FollowingPost.add(post);
+            }
+            model.addAttribute("postList", FollowingPost);
+        } else {
+            model.addAttribute("postList", postList);
         }
         return "home";
     }
@@ -73,7 +86,26 @@ public class ApplicationUserController {
     }
 
 
-
+    @GetMapping("/feed")
+    public String feel(@AuthenticationPrincipal ApplicationUser user , Model model) {
+        if (user != null){
+            Set<ApplicationUser> myFollowing = applicationUserRepo.findByUsername(user.getUsername()).getFollowing();
+            List<Post> postList = new ArrayList();
+            for (ApplicationUser currentFollower : myFollowing) {
+                postList.addAll(currentFollower.getPostList());
+            }
+            model.addAttribute("postList", postList);
+        }
+        return "feed";
+    }
+    @GetMapping("/userprofile")
+    public String printHi(@RequestParam Integer id, @AuthenticationPrincipal ApplicationUser user, Model model) {
+        ApplicationUser currentUser = applicationUserRepo.findByUsername(user.getUsername());
+        ApplicationUser userProfile = applicationUserRepo.findById(id).get();
+        model.addAttribute("username", currentUser.getUsername());
+        model.addAttribute("userProfile", userProfile);
+        return "userProfile.html";
+    }
     @GetMapping("/profile")
     public String profile(@AuthenticationPrincipal ApplicationUser user, Model model) {
         if (user != null) {
@@ -91,7 +123,14 @@ public class ApplicationUserController {
         return "profile";
     }
 
-
+    @PostMapping("/follow")
+    public RedirectView printHi0(@RequestParam Integer id, @AuthenticationPrincipal ApplicationUser user, Model model) {
+        ApplicationUser currentUser = applicationUserRepo.findByUsername(user.getUsername());
+        ApplicationUser newFollowing = applicationUserRepo.findById(id).get();
+        currentUser.setFollowing(newFollowing);
+        applicationUserRepo.save(currentUser);
+        return new RedirectView("/");
+    }
 
 
     @PostMapping("/addpost")

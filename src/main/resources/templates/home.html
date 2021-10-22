@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+
 </head>
 <body>
 
@@ -14,6 +16,24 @@
 </header>
 <main>
     <h1>WELCOME TO CODE FELLOWS SHIP</h1>
+    <main>
+        <img style="width: 100%; position: relative" class="HeroImg" src="https://soimagescdn.azureedge.net/productimage/learningenvironment/ArticleHeader/computer-lab-hero.jpg" alt="dev" />
+
+        <h2 style="position: absolute; top: 70px; left: 30px" class="mainText">WELCOME TO CODE FELLOWS SHIP</h2>
+
+        <ul th:each="post : ${postList}" class="list-group" style="width: 70%; margin: auto; margin-top: 30px">
+            <li class="list-group-item disabled">Post :<span th:text="${post.body}"></span><br /></li>
+            <li class="list-group-item disabled">Time :<span th:text="${post.createAt}"></span><br /></li>
+            <li class="list-group-item disabled">
+                Posted By :<span style="display: inline-block" th:text="${post.user.username}"></span>
+                <form style="float: right" th:action="@{/follow(id=${post.getApplicationUser().getId()})}" method="post">
+                    <button class="btn btn-warning" type="submit">Follow</button>
+                </form>
+                <br />
+            </li>
+            <br />
+        </ul>
+    </main>
 </main>
 </body>
 </html>
