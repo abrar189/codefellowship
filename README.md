@@ -13,3 +13,7 @@ Build an app that allows users to create their profile on CodeFellowship.
 - The site should use reusable templates for its information. (At a minimum, it should have one Thymeleaf fragment that is used on multiple pages.)
 - Ensure that user registration also logs users into your app automatically.
 - Add a Post entity to your app. A Post has a body and a createdAt timestamp. A logged-in user should be able to create a Post, and a post should belong to the user that created it. hint: this is a relationship between two pieces of data A user’s posts should be visible on their profile page.
+
+# lab 17 :
+
+Add a Post entity to your app. A Post has a body and a createdAt timestamp. A logged-in user should be able to create a Post, and a post should belong to the user that created it. hint: this is a relationship between two pieces of data A user’s posts should be visible on their profile page.

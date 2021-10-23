@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>feed</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+
+</head>
+<body>
+<main style="margin-top: 30px; margin: auto; width: 70%">
+    <div>
+        <h3>Your Feed :</h3>
+        <ul th:each="post : ${postList}" class="list-group">
+            <li class="list-group-item disabled">Post :<span th:text="${post.body}"></span><br /></li>
+            <li class="list-group-item disabled">Time :<span th:text="${post.createAt}"></span><br /></li>
+            <li class="list-group-item disabled">
+                Posted By :<span th:text="${post.user.username}"> </span>
+                <button style="float: right" class="btn btn-warning" type="button">
+                    <a th:href="@{http://localhost:8080/userprofile(id=${post.getApplicationUser().getId()})}">Visit Profile</a>
+                </button>
+                <br />
+            </li>
+            <br />
+        </ul>
+    </div>
+</main>
+</body>
+</html>
