@@ -10,16 +10,18 @@
 <body>
 
 <header>
-    <a href="http://localhost:8080/signup">Sing Up</a>
-    <a href="http://localhost:8080/login">Log in</a>
-    <a th:href="@{http://localhost:8080/profile(id=${user})}">Profile</a>
-</header>
-<main>
-    <h1>WELCOME TO CODE FELLOWS SHIP</h1>
-    <main>
-        <img style="width: 100%; position: relative" class="HeroImg" src="https://soimagescdn.azureedge.net/productimage/learningenvironment/ArticleHeader/computer-lab-hero.jpg" alt="dev" />
+    <button class="btn btn-primary"  style="  margin-left:1%; color: white; background-color:#3D0000;margin-top:1%;border: #F9F3DF; font-weight:bold;margin-bottom:1%"> <a style=" color: white;" href="http://localhost:8080/signup">Sign Up</a></button>
 
-        <h2 style="position: absolute; top: 70px; left: 30px" class="mainText">WELCOME TO CODE FELLOWS SHIP</h2>
+    <button class="btn btn-primary"  style=" color: white; background-color:#3D0000;margin-top:1%;border: #F9F3DF; font-weight:bold;margin-bottom:1%"> <a style=" color: white;" href="http://localhost:8080/login">Log in</a></button>
+    <button class="btn btn-primary"  style="background-color:#3D0000; margin-top:1%;border: #F9F3DF; font-weight:bold;margin-bottom:1%"><a  style="color:white;" th:href="@{http://localhost:8080/profile(id=${user})}" > Profile</a></button>
+
+</header>
+
+    <main>
+
+        <h2 style=" top: 70px; left: 30px;   text-align: center;" class="mainText ;" >WELCOME TO CODE FELLOWS SHIP</h2>
+
+        <img style="width: 100%; position: relative" class="HeroImg" src="https://www.eschoolnews.com/files/2021/02/coding-platform-STEM-code.jpg" alt="dev" />
 
         <ul th:each="post : ${postList}" class="list-group" style="width: 70%; margin: auto; margin-top: 30px">
             <li class="list-group-item disabled">Post :<span th:text="${post.body}"></span><br /></li>
@@ -34,6 +36,6 @@
             <br />
         </ul>
     </main>
-</main>
+
 </body>
 </html>

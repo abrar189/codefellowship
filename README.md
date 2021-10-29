@@ -17,3 +17,12 @@ Build an app that allows users to create their profile on CodeFellowship.
 # lab 17 :
 
 Add a Post entity to your app. A Post has a body and a createdAt timestamp. A logged-in user should be able to create a Post, and a post should belong to the user that created it. hint: this is a relationship between two pieces of data A user’s posts should be visible on their profile page.
+
+# lab 18:
+
+- users can follow other users.
+- index page "/" where a user can discover other users on the service.
+- On a user profile page that does NOT belong to the currently logged-in user, there is a “Follow” button. When a user clicks that follow button, the logged-in user is now following the viewed-profile-page user.
+- note: this will require a self-join on ApplicationUsers.
+- A user can visit a url (/feed) to view all of the posts from the users that they follow.
+- Each post have a link to the user profile of the user who wrote the post.
